@@ -1,7 +1,10 @@
 import argparse
-from pathlib import Path
 import sys
+from pathlib import Path
+
+from CalcExcellentStudents import CalcExcellentStudents
 from CalcRating import CalcRating
+from DataReader import DataReader
 from TextDataReader import TextDataReader
 from YamlDataReader import YamlDataReader
 
@@ -16,6 +19,7 @@ def get_path_from_arguments(args) -> str:
 
 def main():
     path = get_path_from_arguments(sys.argv[1:])
+    reader: DataReader
     if Path(path).suffix.lower() in {".yaml", ".yml"}:
         reader = YamlDataReader()
     else:
@@ -24,6 +28,8 @@ def main():
     print("Students: ", students)
     rating = CalcRating(students).calc()
     print("Rating: ", rating)
+    excellent_count = CalcExcellentStudents(students).calc()
+    print(f"Количество студентов-отличников: {excellent_count}")
 
 
 if __name__ == "__main__":
